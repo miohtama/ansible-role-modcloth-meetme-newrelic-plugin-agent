@@ -1,0 +1,13 @@
+---
+- hosts: all
+  pre_tasks:
+  - name: 'install monitor dependencies'
+    apt: name="{{item}}" update_cache=yes
+    with_items:
+    - libpq-dev
+    - python-dev
+
+  roles:
+  - role: modcloth.meetme-newrelic-plugin-agent
+    meetme_newrelic_plugin_agent_backends:
+    - postgresql

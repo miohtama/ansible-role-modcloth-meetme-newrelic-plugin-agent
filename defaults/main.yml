@@ -1,0 +1,4 @@
+---
+
+meetme_newrelic_plugin_agent_backends: []
+meetme_newrelic_plugin_agent_conf_path: /etc/newrelic/newrelic-plugin-agent.yml

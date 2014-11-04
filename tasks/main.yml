@@ -1,0 +1,31 @@
+---
+- name: install newrelic_plugin_agent
+  pip: name=newrelic_plugin_agent
+
+- name: install additional newrelic_plugin_agent backends
+  pip: name="newrelic_plugin_agent[{{item}}]"
+  with_items: meetme_newrelic_plugin_agent_backends 
+
+- name: create configuration directory
+  file: path="{{meetme_newrelic_plugin_agent_conf_path|dirname}}" state=directory
+
+- name: template configuration
+  template:
+    src='{{meetme_newrelic_plugin_agent_template}}'
+    dest='{{meetme_newrelic_plugin_agent_conf_path}}'
+  when: newrelic_plugin_agent_template is defined
+  register: newrelic_plugin_agent_templated
+
+- name: add upstart configuration
+  template:
+    src=newrelic_plugin_agent.conf.j2
+    dest=/etc/init/newrelic_plugin_agent.conf
+  register: newrelic_plugin_agent_upstart
+
+- name: restart service
+  service: name=newrelic_plugin_agent state=restarted
+  when: newrelic_plugin_agent_templated.changed or
+        newrelic_plugin_agent_upstart.changed
+
+- name: start service
+  service: name=newrelic_plugin_agent state=started

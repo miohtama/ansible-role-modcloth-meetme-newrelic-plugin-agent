@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Jesse Szwedko
+  description: This role installs and configures meetme_newrelic_plugin_agent (https://github.com/MeetMe/newrelic-plugin-agent)
+  company: ModCloth, Inc.
+  license: MIT
+  min_ansible_version: 1.7
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - monitoring
+dependencies: []
