@@ -13,19 +13,19 @@
   template:
     src='{{meetme_newrelic_plugin_agent_template}}'
     dest='{{meetme_newrelic_plugin_agent_conf_path}}'
-  when: newrelic_plugin_agent_template is defined
-  register: newrelic_plugin_agent_templated
+  when: meetme_newrelic_plugin_agent_template is defined
+  register: meetme_newrelic_plugin_agent_templated
 
 - name: add upstart configuration
   template:
     src=newrelic_plugin_agent.conf.j2
     dest=/etc/init/newrelic_plugin_agent.conf
-  register: newrelic_plugin_agent_upstart
+  register: meetme_newrelic_plugin_agent_upstart
 
 - name: restart service
   service: name=newrelic_plugin_agent state=restarted
-  when: newrelic_plugin_agent_templated.changed or
-        newrelic_plugin_agent_upstart.changed
+  when: meetme_newrelic_plugin_agent_templated.changed or
+        meetme_newrelic_plugin_agent_upstart.changed
 
 - name: start service
   service: name=newrelic_plugin_agent state=started
