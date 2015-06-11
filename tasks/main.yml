@@ -1,5 +1,5 @@
 ---
-- name: 'install monitor dependencies'
+- name: 'install native dependencies'
   apt: name="{{item}}" update_cache=yes
   with_items:
   - libpq-dev
@@ -18,11 +18,8 @@
 - name: install newrelic_plugin_agent
   pip: name=newrelic_plugin_agent executable=/usr/bin/pip
 
-- name: install newrelic_plugin_agent
-  pip: name=newrelic_plugin_agent
-
 - name: install additional newrelic_plugin_agent backends
-  pip: name="newrelic_plugin_agent[{{item}}]"
+  pip: name="newrelic_plugin_agent[{{item}}]" executable=/usr/bin/pip
   with_items: meetme_newrelic_plugin_agent_backends 
 
 - name: create configuration directory
