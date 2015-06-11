@@ -1,4 +1,23 @@
 ---
+- name: 'install monitor dependencies'
+  apt: name="{{item}}" update_cache=yes
+  with_items:
+  - libpq-dev
+  - python-dev
+  - python-pip
+
+- name: create daemon user
+  pip: name=newrelic
+
+- name: create log directory
+  file: path=/var/log/newrelic state=directory owner=newrelic
+
+- name: create run directory
+  file: path=/var/run/newrelic state=directory owner=newrelic
+
+- name: install newrelic_plugin_agent
+  pip: name=newrelic_plugin_agent executable=/usr/bin/pip
+
 - name: install newrelic_plugin_agent
   pip: name=newrelic_plugin_agent
 
